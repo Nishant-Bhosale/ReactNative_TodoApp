@@ -1,14 +1,17 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 const TaskItem = ({ itemData: { item }, deleteItem }) => {
 	console.log(item);
 	return (
 		<View style={styles.taskItem}>
 			<Text style={{ color: "white", paddingLeft: 12 }}>{item}</Text>
-			<Text style={styles.removeTaskBtn} onPress={() => deleteItem(item)}>
-				X
-			</Text>
+			<Pressable
+				onPress={() => deleteItem(item)}
+				android_ripple={{ color: "#dddddd" }}
+			>
+				<Text style={styles.removeTaskBtn}>X</Text>
+			</Pressable>
 		</View>
 	);
 };
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
 		marginVertical: 12,
 		borderRadius: 3,
 		width: "100%",
-		backgroundColor: "#5e0acc",
+		backgroundColor: "black",
 	},
 	removeTaskBtn: {
 		color: "red",

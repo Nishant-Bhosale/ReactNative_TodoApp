@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import {
+	View,
+	TextInput,
+	Button,
+	StyleSheet,
+	ToastAndroid,
+} from "react-native";
 
 const TaskInput = ({ setTasks }) => {
 	const [inputVal, setInputVal] = useState("");
@@ -12,6 +18,11 @@ const TaskInput = ({ setTasks }) => {
 		if (inputVal === "") return;
 		setTasks(inputVal);
 		setInputVal("");
+		ToastAndroid.showWithGravity(
+			"Task Added Successfully!",
+			ToastAndroid.SHORT,
+			ToastAndroid.BOTTOM,
+		);
 	};
 
 	return (
