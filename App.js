@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, ToastAndroid, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList, Button } from "react-native";
 import TaskInput from "./components/TaskInput";
 import TaskItem from "./components/TaskItem";
-
+import { showToast } from "./utils/ToastAndroid";
 export default function App() {
 	const [items, setItems] = useState([]);
+	const [modalIsVisible, setModalIsVisible] = useState(false);
+
+	const handleModalVisibility = () => {
+		setModalIsVisible((prev) => !prev);
+	};
 
 	const deleteItem = (itemVal) => {
 		const filteredItems = items.filter((item) => item !== itemVal);
 		setItems(filteredItems);
-		ToastAndroid.showWithGravity(
-			"Task Deleted Successfully!",
-			ToastAndroid.BOTTOM,
-			ToastAndroid.LONG,
-		);
+		showToast("Task Deleted Successfully!", "BOTTOM", "LONG");
 	};
 
 	const setTasks = (inputVal) => {
@@ -21,21 +22,33 @@ export default function App() {
 			return [...prev, inputVal];
 		});
 	};
+
 	return (
 		<View style={styles.appContainer}>
-			<TaskInput setTasks={setTasks} />
+			<TaskInput
+				setTasks={setTasks}
+				modalVisibility={modalIsVisible}
+				changeModalVisibility={handleModalVisibility}
+			/>
+			<Button
+				title="Add Task"
+				color="#a065ec"
+				onPress={handleModalVisibility}
+			/>
 			<View style={styles.itemsContainer}>
-				<Text style={styles.taskHeading}>List Of Tasks</Text>
 				{items.length ? (
-					<FlatList
-						data={items}
-						renderItem={(items) => (
-							<TaskItem itemData={items} deleteItem={deleteItem} />
-						)}
-						alwaysBounceVertical={true}
-					/>
+					<>
+						<Text style={styles.taskHeading}>List Of Tasks</Text>
+						<FlatList
+							data={items}
+							renderItem={(items) => (
+								<TaskItem itemData={items} deleteItem={deleteItem} />
+							)}
+							alwaysBounceVertical={true}
+						/>
+					</>
 				) : (
-					<Text>No Tasks Found</Text>
+					<Text style={styles.taskHeading}>No Tasks Found</Text>
 				)}
 			</View>
 		</View>
@@ -50,8 +63,12 @@ const styles = StyleSheet.create({
 	},
 	itemsContainer: {
 		flex: 5,
+		textAlign: "center",
 	},
 	taskHeading: {
 		fontSize: 28,
+		fontWeight: "bold",
+		color: "white",
+		margin: "auto",
 	},
 });
