@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, FlatList, Button } from "react-native";
 import TaskInput from "./components/TaskInput";
 import TaskItem from "./components/TaskItem";
 import { showToast } from "./utils/ToastAndroid";
+
 export default function App() {
 	const [items, setItems] = useState([]);
 	const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -25,16 +26,26 @@ export default function App() {
 
 	return (
 		<View style={styles.appContainer}>
-			<TaskInput
-				setTasks={setTasks}
-				modalVisibility={modalIsVisible}
-				changeModalVisibility={handleModalVisibility}
-			/>
-			<Button
-				title="Add Task"
-				color="#a065ec"
-				onPress={handleModalVisibility}
-			/>
+			<View
+				style={{
+					borderBottomWidth: 1,
+					borderBottomColor: "white",
+					marginTop: 10,
+					paddingBottom: 30,
+					witdth: "100%",
+				}}
+			>
+				<TaskInput
+					setTasks={setTasks}
+					modalVisibility={modalIsVisible}
+					changeModalVisibility={handleModalVisibility}
+				/>
+				<Button
+					title="Add Task"
+					color="#a065ec"
+					onPress={handleModalVisibility}
+				/>
+			</View>
 			<View style={styles.itemsContainer}>
 				{items.length ? (
 					<>
@@ -63,12 +74,12 @@ const styles = StyleSheet.create({
 	},
 	itemsContainer: {
 		flex: 5,
-		textAlign: "center",
 	},
 	taskHeading: {
 		fontSize: 28,
 		fontWeight: "bold",
 		color: "white",
-		margin: "auto",
+		alignSelf: "center",
+		marginTop: 28,
 	},
 });

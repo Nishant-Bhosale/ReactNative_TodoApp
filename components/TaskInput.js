@@ -9,6 +9,7 @@ import {
 	Pressable,
 	Image,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import { showToast } from "../utils/ToastAndroid";
 const taskImage = require("../assets/images/goal.png");
 
@@ -30,24 +31,32 @@ const TaskInput = ({ setTasks, modalVisibility, changeModalVisibility }) => {
 	};
 
 	return (
-		<Modal visible={modalVisibility} animationType="slide">
-			<View style={styles.formContainer}>
-				<Image source={taskImage} style={styles.image} />
-				<TextInput
-					placeholder="Enter task"
-					style={styles.input}
-					onChangeText={handleChange}
-					value={inputVal}
-					placeholderTextColor="#120428"
-				/>
-				<View style={styles.btnContainer}>
-					<Pressable onPress={changeModalVisibility} style={styles.cancelBtn}>
-						<Text style={{ color: "white", textAlign: "center" }}>CANCEL</Text>
-					</Pressable>
-					<Button title="Add Task" onPress={addItem} color="#b180f0" />
+		<>
+			<StatusBar backgroundColor="white" />
+			<Modal visible={modalVisibility} animationType="slide">
+				<View style={styles.formContainer}>
+					<Text style={styles.closeBtn} onPress={changeModalVisibility}>
+						X
+					</Text>
+					<Image source={taskImage} style={styles.image} />
+					<TextInput
+						placeholder="Enter task"
+						style={styles.input}
+						onChangeText={handleChange}
+						value={inputVal}
+						placeholderTextColor="#120428"
+					/>
+					<View style={styles.btnContainer}>
+						<Pressable onPress={changeModalVisibility} style={styles.cancelBtn}>
+							<Text style={{ color: "white", textAlign: "center" }}>
+								CANCEL
+							</Text>
+						</Pressable>
+						<Button title="Add Task" onPress={addItem} color="#b180f0" />
+					</View>
 				</View>
-			</View>
-		</Modal>
+			</Modal>
+		</>
 	);
 };
 
@@ -59,7 +68,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		flex: 1,
 		marginBottom: 24,
-		backgroundColor: "#000",
+		backgroundColor: "#181818",
 	},
 	image: {
 		width: 100,
@@ -92,6 +101,13 @@ const styles = StyleSheet.create({
 		width: 80,
 		height: 35,
 		paddingTop: "2%",
+	},
+	closeBtn: {
+		position: "absolute",
+		color: "white",
+		fontSize: 30,
+		right: 20,
+		top: 20,
 	},
 });
 
